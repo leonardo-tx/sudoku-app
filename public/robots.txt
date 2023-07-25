@@ -1,2 +1,2 @@
 User-agent: *
-Sitemap: http://localhost:4173/sitemap.xml
+Sitemap: https://leonardo-tx.github.io/sudoku-app/sitemap.xml
