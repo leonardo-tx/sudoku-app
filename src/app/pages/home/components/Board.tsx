@@ -12,7 +12,7 @@ export default function Board(): JSX.Element {
 
     useEffect(() => {
         return () => setCurrent({ selectedCell: null, selectedNumber: -1 });
-    }, [])
+    }, [setCurrent]);
 
     const cellElements: JSX.Element[] = useMemo(() => {
         const elements: JSX.Element[] = [];

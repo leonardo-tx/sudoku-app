@@ -10,17 +10,17 @@ import { useAtomValue } from "jotai";
 import sudokuAtom from "./atoms/sudokuAtom";
 
 export default function Home(): JSX.Element {
-    const board = useAtomValue(sudokuAtom);
+    const { challenge } = useAtomValue(sudokuAtom);
     
     useEffect(() => {
-        saveBoard(board);
-    }, [board])
+        saveBoard(challenge);
+    }, [challenge])
 
     return(
         <GameContainer>
             <Board />
             <ActionContainer>
-                {isEmpty(board) ? <CreateGame /> : <GameActions />}
+                {isEmpty(challenge) ? <CreateGame /> : <GameActions />}
             </ActionContainer>
         </GameContainer>
     )

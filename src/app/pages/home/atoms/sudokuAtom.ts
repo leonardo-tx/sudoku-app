@@ -1,20 +1,28 @@
 import { atom } from "jotai";
 import { getBoard } from "../../../../data/board-storage";
-import { createEmptyBoard } from "../../../../core/sudoku/sudoku-generator";
-import { parseDetailedSudoku, getOriginalChallenge } from "../../../../core/sudoku/sudoku-utils";
-import { DetailedSudoku } from "../../../../core/models/sudoku-models";
+import { createEmptyBoard, fillAllCells } from "../../../../core/sudoku/sudoku-generator";
+import { parseDetailedSudoku, getOriginalChallenge, parseSimpleSudoku } from "../../../../core/sudoku/sudoku-utils";
+import { DetailedSudoku, SimpleSudoku } from "../../../../core/models/sudoku-models";
 import { challengeIsValid } from "../../../../core/sudoku/sudoku-solver";
 
-function getSudokuBoard(): DetailedSudoku {
+function getSudokuBoards(): { challenge: DetailedSudoku, complete: SimpleSudoku } {
     const board = getBoard();
-    if (board === null) return parseDetailedSudoku(createEmptyBoard());
+    if (board === null) {
+        const emptyBoard = createEmptyBoard();
+        return { challenge: parseDetailedSudoku(emptyBoard), complete: emptyBoard };
+    }
 
     const challengeBoard = getOriginalChallenge(board);
-    if (!challengeIsValid(challengeBoard)) return parseDetailedSudoku(createEmptyBoard());
+    if (!challengeIsValid(challengeBoard)) {
+        const emptyBoard = createEmptyBoard();
+        return { challenge: parseDetailedSudoku(emptyBoard), complete: emptyBoard };
+    }
+    const completeBoard = parseSimpleSudoku(board);
+    fillAllCells(completeBoard, 0, 0);
 
-    return board;
+    return { challenge: board, complete: completeBoard };
 }
 
-const sudokuAtom = atom(getSudokuBoard());
+const sudokuAtom = atom(getSudokuBoards());
 
 export default sudokuAtom;

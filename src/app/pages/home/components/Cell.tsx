@@ -9,7 +9,7 @@ interface Props {
 }
 
 export default function Cell({ coords, coords: [x, y] }: Props): JSX.Element {
-    const { number, mutable, highlightNumber, selected, onClick } = useCell(coords);
+    const { number, mutable, highlightNumber, selected, wrong, onClick } = useCell(coords);
 
     return (
         <Container
@@ -18,13 +18,13 @@ export default function Cell({ coords, coords: [x, y] }: Props): JSX.Element {
             onClick={onClick}
             $selected={selected}
         >
-            {!mutable && <ImmutableCell />}
+            {mutable ? <MutableCell $wrong={wrong} /> : <ImmutableCell />}
             <SelectedCell
                 $mutable={mutable}
                 $highlightNumber={highlightNumber}
                 $selected={selected}
             />
-            <Text as="b" position="absolute" fontSize="clamp(18px, 3.5vw, 24px)">
+            <Text fontWeight="bold" position="absolute" fontSize="clamp(18px, 3.5vw, 24px)">
                 {number !== EMPTY ? number : ""}
             </Text>
         </Container>
@@ -69,7 +69,7 @@ const show = keyframes`
 const SelectedCell = styled.div<{
     $selected: boolean;
     $highlightNumber: boolean;
-    $mutable: boolean
+    $mutable: boolean;
 }>`
     position: absolute;
     border-radius: 50%;
@@ -79,7 +79,7 @@ const SelectedCell = styled.div<{
     background-color: ${(props) => {
         if (props.$highlightNumber) return "#3F0CAC";
         if (props.$selected) {
-            return props.$mutable ? "#9366F5" : "#3F0CAC"
+            return props.$mutable ? "#9366F5" : "#3F0CAC";
         }
         return "trasparent";
     }};
@@ -89,6 +89,16 @@ const SelectedCell = styled.div<{
 
 const ImmutableCell = styled.div`
     background-color: #2e2e2e;
+    position: absolute;
+    border-radius: 50%;
+    width: 85%;
+    height: 85%;
+`;
+
+const MutableCell = styled.div<{
+    $wrong: boolean;
+}>`
+    background-color: ${props => props.$wrong ? "#cc3535" : "transparent"};
     position: absolute;
     border-radius: 50%;
     width: 85%;

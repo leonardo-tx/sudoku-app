@@ -33,7 +33,7 @@ function fillDiagonalMatrices(board: SimpleSudoku): void {
     }
 }
 
-function fillAllCells(board: SimpleSudoku, x = 3, y = 0): boolean {
+export function fillAllCells(board: SimpleSudoku, x = 3, y = 0): boolean {
     while (board[y][x] !== EMPTY) {
         if (x === 6 && y === 8) return true;
         y = (x + 1 > 8) ? y + 1 : y;
@@ -44,7 +44,7 @@ function fillAllCells(board: SimpleSudoku, x = 3, y = 0): boolean {
         board[y][x] = i;
         if (!validateCell(board, x, y)) { board[y][x] = EMPTY; continue; }
         
-        if (fillAllCells(board, (x + 1) % 9, (x + 1 > 8) ? y + 1 : y)) return true;
+        if (fillAllCells(board, (x + 1) % 9, (x + 1 > 8 && y < 8) ? y + 1 : y)) return true;
         board[y][x] = EMPTY;
     }
     return false;

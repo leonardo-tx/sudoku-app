@@ -8,7 +8,7 @@ export default function useKeyboard(): {
     onClick: (value: number) => void;
 } {
     const [current, setCurrent] = useAtom(currentAtom);
-    const [board, setBoard] = useAtom(sudokuAtom);
+    const [{ challenge }, setSudoku] = useAtom(sudokuAtom);
 
     const onClick = (value: number): void => {
         if (current.selectedCell === null) {
@@ -18,12 +18,12 @@ export default function useKeyboard(): {
 
         const [x, y] = current.selectedCell;
 
-        if (!board[y][x].mutable) return;
-        setBoard((previous) => {
-            const updatedBoard = previous.map(row => [...row]);
+        if (!challenge[y][x].mutable) return;
+        setSudoku((previous) => {
+            const updatedBoard = previous.challenge.map(row => [...row]);
             updatedBoard[y][x] = { number: (value === updatedBoard[y][x].number) ? EMPTY : value, mutable: true };
 
-            return updatedBoard;
+            return { ...previous, challenge: updatedBoard };
         });
     };
 

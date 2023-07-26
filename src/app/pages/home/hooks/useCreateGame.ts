@@ -6,6 +6,7 @@ import { saveNewBoard } from "../../../../data/board-storage";
 import { Difficulty } from "../../../../core/sudoku/sudoku";
 import { useSetAtom } from "jotai";
 import sudokuAtom from "../atoms/sudokuAtom";
+import { fillAllCells } from "../../../../core/sudoku/sudoku-generator";
 
 let worker: Worker;
 
@@ -17,7 +18,7 @@ export default function useCreateGame(): {
     createBoard: (difficulty: Difficulty) => void;
 } {
     const [loading, setLoading] = useState(false);
-    const setBoard = useSetAtom(sudokuAtom);
+    const setSudoku = useSetAtom(sudokuAtom);
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     useEffect(() => {
@@ -26,12 +27,14 @@ export default function useCreateGame(): {
             saveNewBoard(event.data);
             
             const board = parseDetailedSudoku(event.data);
-            setBoard(board);
+            fillAllCells(event.data, 0, 0);
+
+            setSudoku({ challenge: board, complete: event.data });
             setLoading(false);
         }
 
         return () => worker.terminate();
-    }, []);
+    }, [setSudoku]);
 
     const createBoard = (difficulty: Difficulty): void => {
         setLoading(true);

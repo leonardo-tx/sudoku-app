@@ -7,31 +7,31 @@ import { BOARD_LENGTH } from "../../../../core/constants/sudoku-constants";
 import sudokuAtom from "../atoms/sudokuAtom";
 
 export default function Undo(): JSX.Element {
-    const [board, setBoard] = useAtom(sudokuAtom);
+    const [{ challenge }, setSudoku] = useAtom(sudokuAtom);
     const history = useRef<{ list: HistoryItem[]; lastBoard: DetailedSudoku }>({
-        lastBoard: board.map(row => [...row]),
+        lastBoard: challenge.map(row => [...row]),
         list: []
     });
 
     useEffect(() => {
-        const historyItem = findHistoryItem(board, history.current.lastBoard);
+        const historyItem = findHistoryItem(challenge, history.current.lastBoard);
         if (historyItem === null) return;
 
-        history.current.lastBoard = board.map(row => [...row]);
+        history.current.lastBoard = challenge.map(row => [...row]);
         history.current.list.push(historyItem);
-    }, [board]);
+    }, [challenge]);
 
     const onClick = (): void => {
         const historyItem = history.current.list.pop();
         if (historyItem === undefined) return;
 
-        const updatedBoard = board.map(row => [...row]);
+        const updatedBoard = challenge.map(row => [...row]);
         const [x, y] = historyItem.coords;
         
         updatedBoard[y][x] = { ...updatedBoard[y][x], number: historyItem.number };
 
         history.current.lastBoard = updatedBoard;
-        setBoard(updatedBoard.map(row => [...row]));
+        setSudoku(previous => ({...previous, challenge: updatedBoard.map(row => [...row])}));
     };
 
     return (
