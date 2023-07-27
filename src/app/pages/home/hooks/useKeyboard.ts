@@ -12,7 +12,7 @@ export default function useKeyboard(): {
 
     const onClick = (value: number): void => {
         if (current.selectedCell === null) {
-            setCurrent(previous => ({...previous, selectedNumber: previous.selectedNumber !== value ? value : -1}));
+            setCurrent(value);
             return;
         }
 

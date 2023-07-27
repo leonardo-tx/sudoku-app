@@ -53,7 +53,7 @@ export default function useCell(coords: [x: number, y: number]): {
 
     const onClick = (): void => {
         if (current.selectedNumber === -1) {
-            setCurrent(previous =>  ({...previous, selectedCell: !coordsAreEqual(previous.selectedCell, coords) ? coords : null}))
+            setCurrent(coords);
             return;
         }
         if (!mutable) return;

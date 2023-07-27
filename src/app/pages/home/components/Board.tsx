@@ -1,19 +1,11 @@
 import { Grid } from "@chakra-ui/react";
-import { JSX, useEffect, useMemo } from "react";
+import { JSX, useMemo } from "react";
 import { BOARD_LENGTH } from "../../../../core/constants/sudoku-constants";
 import Cell from "./Cell";
 import styled from "styled-components";
-import { useSetAtom } from "jotai";
-import currentAtom from "../atoms/currentAtom";
 import Divisors from "./Divisors";
 
 export default function Board(): JSX.Element {
-    const setCurrent = useSetAtom(currentAtom);
-
-    useEffect(() => {
-        return () => setCurrent({ selectedCell: null, selectedNumber: -1 });
-    }, [setCurrent]);
-
     const cellElements: JSX.Element[] = useMemo(() => {
         const elements: JSX.Element[] = [];
 

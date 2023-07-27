@@ -35,18 +35,6 @@ export function parseDetailedSudoku(arg: SimpleSudoku): DetailedSudoku {
     return result;
 }
 
-export function parseSimpleSudoku(arg: DetailedSudoku): SimpleSudoku {
-    const result: SimpleSudoku = new Array(BOARD_LENGTH);
-
-    for (let y = 0; y < BOARD_LENGTH; y++) {
-        result[y] = new Array(9);
-        for (let x = 0; x < BOARD_LENGTH; x++) {
-            result[y][x] = arg[y][x].mutable ? EMPTY : arg[y][x].number;
-        }
-    }
-    return result;
-}
-
 export function isEmpty(board: DetailedSudoku): boolean {
     for (let y = 0; y < BOARD_LENGTH; y++) {
         for (let x = 0; x < BOARD_LENGTH; x++) {
@@ -76,6 +64,15 @@ export function countEmptyCells(board: SimpleSudoku): number {
         }
     }
     return count;
+}
+
+export function hasEmptyCell(board: DetailedSudoku): boolean {
+    for (let y = 0; y < BOARD_LENGTH; y++) {
+        for (let x = 0; x < BOARD_LENGTH; x++) {
+            if (board[y][x].number === EMPTY) return true;
+        }
+    }
+    return false;
 }
 
 export function getAllNumbers(): number[] {

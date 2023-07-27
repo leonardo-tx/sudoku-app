@@ -27,9 +27,11 @@ export default function useCreateGame(): {
             saveNewBoard(event.data);
             
             const board = parseDetailedSudoku(event.data);
-            fillAllCells(event.data, 0, 0);
+            const completeBoard = event.data.map((row) => [...row]);
+            
+            fillAllCells(completeBoard, 0, 0);
 
-            setSudoku({ challenge: board, complete: event.data });
+            setSudoku({ challenge: board, complete: completeBoard });
             setLoading(false);
         }
 

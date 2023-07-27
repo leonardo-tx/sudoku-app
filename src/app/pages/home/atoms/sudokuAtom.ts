@@ -1,7 +1,7 @@
 import { atom } from "jotai";
 import { getBoard } from "../../../../data/board-storage";
 import { createEmptyBoard, fillAllCells } from "../../../../core/sudoku/sudoku-generator";
-import { parseDetailedSudoku, getOriginalChallenge, parseSimpleSudoku } from "../../../../core/sudoku/sudoku-utils";
+import { parseDetailedSudoku, getOriginalChallenge } from "../../../../core/sudoku/sudoku-utils";
 import { DetailedSudoku, SimpleSudoku } from "../../../../core/models/sudoku-models";
 import { challengeIsValid } from "../../../../core/sudoku/sudoku-solver";
 
@@ -17,10 +17,9 @@ function getSudokuBoards(): { challenge: DetailedSudoku, complete: SimpleSudoku 
         const emptyBoard = createEmptyBoard();
         return { challenge: parseDetailedSudoku(emptyBoard), complete: emptyBoard };
     }
-    const completeBoard = parseSimpleSudoku(board);
-    fillAllCells(completeBoard, 0, 0);
 
-    return { challenge: board, complete: completeBoard };
+    fillAllCells(challengeBoard, 0, 0);
+    return { challenge: board, complete: challengeBoard };
 }
 
 const sudokuAtom = atom(getSudokuBoards());
