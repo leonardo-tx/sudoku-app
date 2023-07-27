@@ -35,7 +35,7 @@ function fillDiagonalMatrices(board: SimpleSudoku): void {
 
 export function fillAllCells(board: SimpleSudoku, x = 3, y = 0): boolean {
     while (board[y][x] !== EMPTY) {
-        if (x === 6 && y === 8) return true;
+        if (x === 8 && y === 8) return true;
         y = (x + 1 > 8) ? y + 1 : y;
         x = (x + 1) % BOARD_LENGTH;
     }
