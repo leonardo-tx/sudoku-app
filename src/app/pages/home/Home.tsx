@@ -27,7 +27,7 @@ export default function Home(): JSX.Element {
 
         setCurrent(-1);
         onOpen();
-    }, [finished, onOpen])
+    }, [finished, onOpen, setCurrent])
 
     return(
         <GameContainer>
