@@ -42,7 +42,7 @@ export default function Home(): JSX.Element {
 
 const GameContainer = styled(Box)`
     display: grid;
-    grid-template-columns: 1fr clamp(0px, 100%, 600px) 1fr;
+    grid-template-columns: 1fr clamp(0px, min(100%, 80vh), 600px) 1fr;
     grid-template-areas:
         "game-left board game-right"
     ;

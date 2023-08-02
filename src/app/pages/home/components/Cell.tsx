@@ -24,7 +24,7 @@ export default function Cell({ coords, coords: [x, y] }: Props): JSX.Element {
                 $highlightNumber={highlightNumber}
                 $selected={selected}
             />
-            <Text fontWeight="bold" position="absolute" fontSize="clamp(18px, 3.5vw, 24px)">
+            <Text fontWeight="bold" position="absolute" fontSize="clamp(18px, min(3.5vw, 3vh), 24px)">
                 {number !== EMPTY ? number : ""}
             </Text>
         </Container>

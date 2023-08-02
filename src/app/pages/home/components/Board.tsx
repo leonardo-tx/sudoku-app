@@ -32,7 +32,7 @@ export default function Board(): JSX.Element {
 
 const GridBoard = styled(Grid)`
     grid-area: board;
-    width: clamp(0px, 100%, 600px);
+    width: clamp(0px, min(100%, 80vh), 600px);
     position: relative;
     aspect-ratio: 1 / 1;
 `;
