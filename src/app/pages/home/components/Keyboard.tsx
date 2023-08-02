@@ -18,7 +18,7 @@ export default function Keyboard(): JSX.Element {
                     key={key.value} 
                     as="button"
                 >
-                    <Text fontWeight="bold" fontSize="clamp(18px, 3.5vw, 24px)">{key.name ?? key.value}</Text>
+                    <Text fontWeight="bold" fontSize="clamp(18px, min(3.5vw, 3vh), 24px)">{key.name ?? key.value}</Text>
                 </GridItem>
             ))}
         </GridKeyboard>
@@ -26,8 +26,8 @@ export default function Keyboard(): JSX.Element {
 }
 
 const GridKeyboard = styled(Grid)`
-    grid-template-rows: repeat(2, 50px);
-    grid-template-columns: repeat(5, 50px);
+    grid-template-rows: repeat(2, min(50px, 10vw, 9vh));
+    grid-template-columns: repeat(5, min(50px, 10vw, 9vh));
     gap: 8px;
 `;
 
